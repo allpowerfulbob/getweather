@@ -3,6 +3,7 @@ from configparser import ConfigParser
 import requests
 from tkinter import *
 from tkinter import messagebox
+import pytest
 
 # Extract key from the configuration file
 config_file = 'config.ini'
@@ -21,8 +22,9 @@ def getweather(city):
         country = json['sys']
         temp_kelvin = json['main']['temp']
         temp_celsius = temp_kelvin-273.15
+        temp_farenheit = (temp_celsius * 1.8) + 32
         weather1 = json['weather'][0]['main']
-        final = [city, country, temp_kelvin, temp_celsius, weather1]
+        final = [city, country, temp_kelvin, temp_celsius, temp_farenheit, weather1]
         return final
 
     else:
