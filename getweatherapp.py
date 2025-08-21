@@ -9,25 +9,24 @@ config_file = 'config.ini'
 config = ConfigParser()
 config.read(config_file)
 api_key = config['gfg']['api']
-url = 'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}'
+url = 'http://api.openweathermap.org/data/2.5/weather?q=%7B%7D&appid=%7B%7D'
 
 # Function to get weather details
 def getweather(city):
-    json = result.json()
-    city = json['name']
     result = requests.get(url.format(city, api_key))
-
+    
     if result.json():
+        json = result.json()
         city = json['name']
         country = json['sys']
         temp_kelvin = json['main']['temp']
         temp_celsius = temp_kelvin-273.15
         weather1 = json['weather'][0]['main']
         final = [city, country, temp_kelvin, temp_celsius, weather1]
-    return final
+        return final
 
     else:
-    print("No content found")
+        print("No content found")
 
 # function to search city
 def search():
@@ -49,7 +48,7 @@ app = Tk()
 app.title("Get Weather")
 
 # Adjust the window size
-app.geometrry("300x300")
+app.geometry("300x300")
 
 # Add labels, buttons, and text
 city_text = StringVar()
@@ -57,8 +56,8 @@ city_entry = Entry(app, textvariable=city_text)
 city_entry.pack()
 
 Search_btn = Button(app, text="Search the weather",
-                    width=12, command=search)
-search_btn.pack()
+                    width=16, command=search)
+Search_btn.pack()
 
 location_lbl = Label(app, text="Location",
                      font={'bold', 20})
